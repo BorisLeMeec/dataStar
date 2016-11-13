@@ -12,12 +12,12 @@ func TestGetStopsFromLineID(t *testing.T) {
 		fmt.Printf("ERR : %s\n", err)
 		t.Error("Test failed")
 	} else {
-		fmt.Printf("%s\n", res)
+		fmt.Print(res)
 	}
 }
 
 func TestGetLinesByStopID(t *testing.T) {
-	res, err := getLinesByStopID("1214")
+	res, err := GetLinesByStopID("1214")
 
 	if err != nil {
 		fmt.Printf("ERR : %s\n", err)
@@ -34,6 +34,6 @@ func TestGetStopAutocomplete(t *testing.T) {
 		fmt.Printf("ERR : %s\n", err)
 		t.Error("Test failed")
 	} else {
-		fmt.Printf("%s\n", res)
+		fmt.Print(res)
 	}
 }
