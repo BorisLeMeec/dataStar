@@ -54,6 +54,6 @@ func main() {
 	app.GET("/lines/:lineID", APIGetStopsForLine)
 	app.Run(fmt.Sprintf(":%s", os.Getenv("API_PORT")))
 	app.NoRoute(func(c *gin.Context) {
-		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
+		c.JSON(404, gin.H{"code": "404", "message": "Page not found"})
 	})
 }
