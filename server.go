@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -13,13 +15,16 @@ var DB *neoism.Database
 
 //APIGetAllLines return All lines of bus
 func APIGetAllLines(c *gin.Context) {
-	content, err := GetAllLines()
+	lines, err := GetAllLines()
 	if err != nil {
-		fmt.Printf("%s\n", err)
+		return
+	}
+	content, err := json.Marshal(lines)
+	if err != nil {
 		return
 	}
 	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
-		c.JSON(200, content)
+		c.String(http.StatusOK, string(content))
 		return
 	}
 }
@@ -28,13 +33,18 @@ func APIGetAllLines(c *gin.Context) {
 func APIGetStopsForLine(c *gin.Context) {
 	lineID := c.Params.ByName("lineID")
 
-	content, err := GetStopsFromLineID(lineID)
+	stops, err := GetStopsFromLineID(lineID)
 	if err != nil {
-		fmt.Printf("%s\n", err)
 		return
 	}
-	c.JSON(200, content)
-
+	content, err := json.Marshal(stops)
+	if err != nil {
+		return
+	}
+	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
+		c.String(http.StatusOK, string(content))
+		return
+	}
 }
 
 func init() {
@@ -58,6 +68,6 @@ func main() {
 	app.GET("/:lineID", APIGetStopsForLine)
 	app.Run(fmt.Sprintf(":%s", os.Getenv("API_PORT")))
 	app.NoRoute(func(c *gin.Context) {
-		c.JSON(404, gin.H{"code": "404", "message": "Page not found"})
+		c.JSON(http.StatusNotFound, gin.H{"code": "404", "message": "Page not found"})
 	})
 }
