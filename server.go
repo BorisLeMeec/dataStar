@@ -24,11 +24,7 @@ func APIGetAllLines(c *gin.Context) {
 //APIGetStopsForLine return all stops for lineID
 func APIGetStopsForLine(c *gin.Context) {
 	lineID := c.Params.ByName("lineID")
-	format, get := c.Get("format")
-	if get != true {
-		return
-	}
-	fmt.Printf("%s\n", format)
+
 	content, err := GetStopsFromLineID(lineID)
 	if err != nil {
 		fmt.Printf("%s\n", err)
