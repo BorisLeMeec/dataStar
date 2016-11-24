@@ -18,7 +18,10 @@ func APIGetAllLines(c *gin.Context) {
 		fmt.Printf("%s\n", err)
 		return
 	}
-	c.JSON(200, content)
+	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
+		c.JSON(200, content)
+		return
+	}
 }
 
 //APIGetStopsForLine return all stops for lineID
