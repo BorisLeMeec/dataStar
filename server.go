@@ -19,15 +19,15 @@ func APIGetAllLines(c *gin.Context) {
 	if err != nil {
 		return
 	}
+	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
+		c.JSON(http.StatusOK, lines)
+		return
+	}
 	content, err := json.Marshal(lines)
 	if err != nil {
 		return
 	}
-	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
-		c.String(http.StatusOK, string(content))
-		c.Header("Content-Type", "application/json")
-		return
-	}
+	c.String(http.StatusOK, string(content))
 }
 
 //APIGetStopsForLine return all stops for lineID
@@ -38,15 +38,15 @@ func APIGetStopsForLine(c *gin.Context) {
 	if err != nil {
 		return
 	}
+	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
+		c.JSON(http.StatusOK, stops)
+		return
+	}
 	content, err := json.Marshal(stops)
 	if err != nil {
 		return
 	}
-	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
-		c.String(http.StatusOK, string(content))
-		c.Header("Content-Type", "application/json")
-		return
-	}
+	c.String(http.StatusOK, string(content))
 }
 
 func init() {
