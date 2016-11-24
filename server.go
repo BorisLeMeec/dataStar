@@ -24,7 +24,8 @@ func APIGetAllLines(c *gin.Context) {
 		return
 	}
 	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
-		c.JSON(http.StatusOK, string(content))
+		c.String(http.StatusOK, string(content))
+		c.Header("Content-Type", "application/json")
 		return
 	}
 }
@@ -42,7 +43,8 @@ func APIGetStopsForLine(c *gin.Context) {
 		return
 	}
 	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
-		c.JSON(http.StatusOK, string(content))
+		c.String(http.StatusOK, string(content))
+		c.Header("Content-Type", "application/json")
 		return
 	}
 }
