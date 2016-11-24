@@ -24,7 +24,7 @@ func APIGetAllLines(c *gin.Context) {
 		return
 	}
 	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
-		c.String(http.StatusOK, string(content))
+		c.JSON(http.StatusOK, string(content))
 		return
 	}
 }
@@ -42,7 +42,7 @@ func APIGetStopsForLine(c *gin.Context) {
 		return
 	}
 	if value, ok := c.GetQuery("format"); ok == true && value == "json" {
-		c.String(http.StatusOK, string(content))
+		c.JSON(http.StatusOK, string(content))
 		return
 	}
 }
