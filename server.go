@@ -50,8 +50,8 @@ func init() {
 func main() {
 	app := gin.Default()
 
-	app.GET("/lines", APIGetAllLines)
-	app.GET("/lines/:lineID", APIGetStopsForLine)
+	app.GET("/", APIGetAllLines)
+	app.GET("/:lineID/?format=:json", APIGetStopsForLine)
 	app.Run(fmt.Sprintf(":%s", os.Getenv("API_PORT")))
 	app.NoRoute(func(c *gin.Context) {
 		c.JSON(404, gin.H{"code": "404", "message": "Page not found"})
