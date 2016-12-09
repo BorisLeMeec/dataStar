@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 
@@ -57,7 +56,7 @@ func init() {
 	password := os.Getenv("NEO4J_PASSWD")
 	host := os.Getenv("NEO4J_HOST")
 	port := os.Getenv("NEO4J_PORT")
-	DB, err = neoism.Connect(fmt.Sprintf("%s://%s:%s@%s:%s", protocol, user, password, host, port))
+	DB, err = neoism.Connect(protocol + "://" + user + ":" + password + "@" + host + ":" + port)
 	if err != nil {
 		return
 	}
@@ -68,7 +67,7 @@ func main() {
 
 	app.GET("/", APIGetAllLines)
 	app.GET("/:lineID", APIGetStopsForLine)
-	app.Run(fmt.Sprintf(":%s", os.Getenv("API_PORT")))
+	app.Run(":" + os.Getenv("API_PORT"))
 	app.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"code": "404", "message": "Page not found"})
 	})
